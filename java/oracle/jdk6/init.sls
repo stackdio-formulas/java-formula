@@ -41,11 +41,11 @@ oracle-java6-installer:
 {% elif grains['os_family'] == 'RedHat' %}
 
 # Staging directory
-{% set staging="/tmp/.jdk6_staging" %}
-{% set cookies="oraclelicensejdk-6u45-oth-JPR=accept-securebackup-cookie;gpw_e24=http://edelivery.oracle.com" %}
-{% set jdk6_bin="jdk-6u45-linux-x64-rpm.bin" %}
-{% set jdk6_uri="http://download.oracle.com/otn-pub/java/jdk/6u45-b06/" ~ jdk6_bin %}
-{% set jdk6_package="jdk-1.6.0_45" %}
+{% set staging = pillar.java.oracle.staging %}
+{% set cookies = pillar.java.oracle.cookies %}
+{% set java_bin = pillar.java.oracle.jdk6.bin %}
+{% set java_uri = pillar.java.oracle.jdk6.uri %}
+{% set java_rpm = pillar.java.oracle.jdk6.rpm %}
 
 {{ staging }}:
   file:
@@ -57,24 +57,30 @@ wget:
   pkg:
     - installed
 
-# download JDK6
-download_jdk6:
+download_java:
   cmd:
     - run
     - cwd: {{ staging }}
-    - name: 'wget --no-check-certificate --header="Cookie: {{ cookies }}" -c "{{ jdk6_uri }}" -O "{{ jdk6_bin }}"'
-    - unless: 'rpm -qa | grep {{ jdk6_package }}'
+    - name: 'wget --no-check-certificate --header="Cookie: {{ cookies }}" -c "{{ java_uri }}" -O "{{ java_bin }}"'
+    - unless: 'rpm -qa | grep {{ java_rpm }}'
     - require:
       - pkg: wget
       - file: {{ staging }}
 
-install_jdk6:
+install_java:
   cmd:
     - run
     - cwd: {{ staging }}
-    - name: 'chmod 755 {{ jdk6_bin }} && bash ./{{ jdk6_bin }}'
-    - unless: 'rpm -qa | grep {{ jdk6_package }}'
+    - name: 'chmod 755 {{ java_bin }} && bash ./{{ java_bin }}'
+    - unless: 'rpm -qa | grep {{ java_rpm }}'
     - require:
-      - cmd: download_jdk6
+      - cmd: download_java 
+
+clear_staging:
+  file:
+    - absent
+    - name: {{ staging }}
+    - require:
+      - cmd: install_java
 
 {% endif %}

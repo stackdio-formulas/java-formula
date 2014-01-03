@@ -26,3 +26,12 @@ components:
   - title: OpenJDK Java 7 JRE
     description: OpenJDK Java 7 JRE
     sls_path: java.openjdk.jre7
+pillar_defaults:
+  java:
+    oracle:
+      staging: /tmp/.java_staging
+      cookies: 'oraclelicensejdk-6u45-oth-JPR=accept-securebackup-cookie;gpw_e24=http://edelivery.oracle.com'
+      jdk6:
+        bin: 'jdk-6u45-linux-x64-rpm.bin'
+        uri: 'http://download.oracle.com/otn-pub/java/jdk/6u45-b06/'
+        rpm: 'jdk-1.6.0_45'
