@@ -38,18 +38,20 @@ oracle-java6-installer:
       - cmd: jdk6_installer_selections
       - module: jdk6_refresh_db
       - file: /etc/environment
+
 {% elif grains['os_family'] == 'RedHat' %}
 
 # Staging directory
-{% set staging = pillar.java.oracle.staging %}
-{% set cookies = pillar.java.oracle.cookies %}
+{% set staging  = pillar.java.oracle.staging %}
+{% set cookies  = pillar.java.oracle.cookies %}
 {% set java_bin = pillar.java.oracle.jdk6.bin %}
-{% set java_uri = pillar.java.oracle.jdk6.uri %}
+{% set java_uri = pillar.java.oracle.jdk6.uri + pillar.java.oracle.jdk6.bin %}
 {% set java_rpm = pillar.java.oracle.jdk6.rpm %}
 
-{{ staging }}:
+init_staging:
   file:
     - directory
+    - name: {{ staging }}
     - makedirs: true
     - clean: true
 
@@ -65,13 +67,13 @@ download_java:
     - unless: 'rpm -qa | grep {{ java_rpm }}'
     - require:
       - pkg: wget
-      - file: {{ staging }}
+      - file: init_staging
 
 install_java:
   cmd:
     - run
     - cwd: {{ staging }}
-    - name: 'chmod 755 {{ java_bin }} && bash ./{{ java_bin }}'
+    - name: 'chmod 755 {{ java_bin }} && ./{{ java_bin }}'
     - unless: 'rpm -qa | grep {{ java_rpm }}'
     - require:
       - cmd: download_java 

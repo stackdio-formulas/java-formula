@@ -30,8 +30,18 @@ pillar_defaults:
   java:
     oracle:
       staging: /tmp/.java_staging
-      cookies: 'oraclelicensejdk-6u45-oth-JPR=accept-securebackup-cookie;gpw_e24=http://edelivery.oracle.com'
+      cookies: 'gpw_e24=http%3A%2F%2Fwww.oracle.com%2F'
       jdk6:
-        bin: 'jdk-6u45-linux-x64-rpm.bin'
         uri: 'http://download.oracle.com/otn-pub/java/jdk/6u45-b06/'
+        bin: 'jdk-6u45-linux-x64-rpm.bin'
         rpm: 'jdk-1.6.0_45'
+      jre6:
+        uri: 'http://download.oracle.com/otn-pub/java/jdk/6u45-b06/'
+        bin: 'jre-6u45-linux-x64-rpm.bin'
+        rpm: 'jre-1.6.0_45'
+      jdk7:
+        uri: 'http://download.oracle.com/otn-pub/java/jdk/7u40-b43/jdk-7u40-linux-x64.rpm'
+        rpm: 'jdk-1.7.0_40'
+      jre7:
+        uri: 'http://download.oracle.com/otn-pub/java/jdk/7u40-b43/jre-7u40-linux-x64.rpm'
+        rpm: 'jre-1.7.0_40'
