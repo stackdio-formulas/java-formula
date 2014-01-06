@@ -1,7 +1,36 @@
 {% if grains['os_family'] == 'Debian' %}
-#
-# TODO
-#
+
+# add the oracle apt repository
+java_repo:
+  pkgrepo:
+    - managed
+    - ppa: webupd8team/java
+
+# accept the license agreement for a headless install
+java_installer_selections:
+  cmd:
+    - run
+    - name: 'echo oracle-java6-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections'
+    - require:
+      - pkgrepo: java_repo
+
+# ie, apt-get update
+java_refresh_db:
+  module:
+    - run
+    - name: pkg.refresh_db
+    - require:
+      - pkgrepo: java_repo
+
+# install java
+oracle-java7-installer:
+  pkg:
+    - installed
+    - name: oracle-java7-installer
+    - require:
+      - cmd: java_installer_selections
+      - module: java_refresh_db
+
 {% elif grains['os_family'] == 'RedHat' %}
 
 # Staging directory
