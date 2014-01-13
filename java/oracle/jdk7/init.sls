@@ -65,6 +65,7 @@ install_java:
     - run
     - cwd: {{ staging }}
     - name: 'rpm -Uvh {{ java_rpm }}.rpm'
+    - unless: 'rpm -qa | grep {{ java_rpm }}'
     - require:
       - cmd: download_java
 
