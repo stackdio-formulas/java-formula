@@ -1,13 +1,20 @@
-{% if grains['os_family'] == 'Debian' %}
+{% set java = salt['grains.filter_by']({
+    'Debian': {
+      'package': 'openjdk-7-jre'
+    },
+    'RedHat': {
+      'package': 'java-1.7.0-openjdk'
+    },
+}) %}
 
-openjdk-7-jre:
+
+install_java:
   pkg:
     - installed
+    - name: {{ java.package }}
 
-{% elif grains['os_family'] == 'RedHat' %}
-
-java-1.7.0-openjdk:
-  pkg:
-    - installed
-
-{% endif %}
+/usr/java/latest:
+  file:
+    - symlink
+    - target: /etc/alternatives/jre
+    - makedirs: true
