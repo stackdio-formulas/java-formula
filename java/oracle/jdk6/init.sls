@@ -1,3 +1,6 @@
+include:
+  - java.java_home
+
 {% if grains['os_family'] == 'Debian' %}
 
 # add the oracle apt repository

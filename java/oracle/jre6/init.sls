@@ -1,3 +1,6 @@
+include:
+  - java.java_home
+
 {% if grains['os_family'] == 'Debian' %}
 
 # The webup8team PPA does not provide a JRE install, nor does

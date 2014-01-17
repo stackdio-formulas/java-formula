@@ -7,6 +7,8 @@
     },
 }) %}
 
+include:
+  - java.java_home
 
 install_java:
   pkg:
