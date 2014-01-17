@@ -1,9 +1,13 @@
 {% set settings = salt['grains.filter_by']({
     'Debian': {
-      'bashrc': '/etc/bash.bashrc'
+      'bashrc': '/etc/bash.bashrc',
+      'marker_start': '# System-wide .bashrc file for interactive bash(1) shells.',
+      'marker_end': '# To enable the settings / commands in this file for login shells as well,'
     },
     'RedHat': {
-      'bashrc': '/etc/bashrc'
+      'bashrc': '/etc/bashrc',
+      'marker_start': '# /etc/bashrc',
+      'marker_end': '# System wide functions and aliases',
     },
 }) %}
 
@@ -18,8 +22,8 @@
 
 {{ settings.bashrc }}:
   file:
-    - sed
-    - before: ''
-    - after: 'export JAVA_HOME=/usr/java/latest'
-    - flags': '^$'
-
+    - blockreplace
+    - marker_start: '{{ settings.marker_start }}'
+    - marker_end: '{{ settings.marker_end }}'
+    - content: |
+        export JAVA_HOME=/usr/java/latest
