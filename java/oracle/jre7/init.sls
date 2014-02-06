@@ -47,6 +47,15 @@ install_java:
     - require:
       - cmd: download_java
 
+set_alternatives:
+  cmd:
+    - run
+    - cwd: {{ staging }}
+    - name: 'alternatives --install /usr/bin/java java /usr/java/latest/bin/java 1000000'
+    - onlyif: 'rpm -qa | grep {{ java_rpm }}'
+    - require:
+      - cmd: install_java
+
 clear_staging:
   file:
     - absent
