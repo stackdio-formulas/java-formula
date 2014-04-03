@@ -30,7 +30,7 @@ pillar_defaults:
   java:
     oracle:
       staging: /tmp/.java_staging
-      cookies: 'gpw_e24=http%3A%2F%2Fwww.oracle.com%2F'
+      cookies: 'gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie'
       jdk6:
         uri: 'http://download.oracle.com/otn-pub/java/jdk/6u45-b06/'
         bin: 'jdk-6u45-linux-x64-rpm.bin'
