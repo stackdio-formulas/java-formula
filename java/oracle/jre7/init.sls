@@ -6,7 +6,6 @@ include:
 # The webup8team PPA does not provide a JRE install, nor does
 # Oracle provide deb files. For now, we're going to install
 # the JDK from the PPA.
-include:
   - java.oracle.jdk7
 
 {% elif grains['os_family'] == 'RedHat' %}
