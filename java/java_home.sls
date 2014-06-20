@@ -9,7 +9,7 @@
       'bashrc': '/etc/bashrc',
       'marker_start': '# /etc/bashrc',
       'marker_end': '# System wide functions and aliases',
-      'java-home': '/usr/java/latest',
+      'java_home': '/usr/java/latest',
     },
 }) %}
 
