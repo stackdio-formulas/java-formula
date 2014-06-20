@@ -34,6 +34,15 @@ oracle-java7-installer:
       - cmd: java_installer_selections
       - module: java_refresh_db
 
+# make the latest link
+/usr/lib/jvm/latest:
+  file:
+    - symlink
+    - target: java-7-oracle
+    - require:
+      - pkg: oracle-java7-installer
+
+
 {% elif grains['os_family'] == 'RedHat' %}
 
 # Staging directory

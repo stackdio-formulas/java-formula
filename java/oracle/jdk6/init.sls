@@ -34,6 +34,15 @@ oracle-java6-installer:
       - cmd: java_installer_selections
       - module: java_refresh_db
 
+# make latest link
+/usr/lib/jvm/latest:
+  file:
+    - symlink
+    - target: java-6-oracle
+    - requires:
+      - pkg: oracle-java6-installer
+
+
 {% elif grains['os_family'] == 'RedHat' %}
 
 # Staging directory
