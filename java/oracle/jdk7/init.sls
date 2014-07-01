@@ -49,7 +49,7 @@ oracle-java7-installer:
     - symlink
     - target: jdk1.7.0
     - require:
-      - pkg: /usr/java/jdk1.7.0
+      - file: /usr/java/jdk1.7.0
 
 
 {% elif grains['os_family'] == 'RedHat' %}

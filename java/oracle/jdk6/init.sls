@@ -49,7 +49,7 @@ oracle-java6-installer:
     - symlink
     - target: jdk1.6.0
     - require:
-      - pkg: /usr/java/jdk1.6.0
+      - file: /usr/java/jdk1.6.0
 
 
 {% elif grains['os_family'] == 'RedHat' %}
