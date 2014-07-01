@@ -2,12 +2,14 @@
     'Debian': {
       'bashrc': '/etc/bash.bashrc',
       'marker_start': '# System-wide .bashrc file for interactive bash(1) shells.',
-      'marker_end': '# To enable the settings / commands in this file for login shells as well,'
+      'marker_end': '# To enable the settings / commands in this file for login shells as well,',
+      'java_home': '/usr/java/latest',
     },
     'RedHat': {
       'bashrc': '/etc/bashrc',
       'marker_start': '# /etc/bashrc',
       'marker_end': '# System wide functions and aliases',
+      'java_home': '/usr/java/latest',
     },
 }) %}
 
@@ -18,7 +20,7 @@
     - group: root
     - mode: 644
     - makedirs: true
-    - contents: 'export JAVA_HOME=/usr/java/latest'
+    - contents: 'export JAVA_HOME={{ settings.java_home }}'
 
 {{ settings.bashrc }}:
   file:
@@ -26,4 +28,4 @@
     - marker_start: '{{ settings.marker_start }}'
     - marker_end: '{{ settings.marker_end }}'
     - content: |
-        export JAVA_HOME=/usr/java/latest
+        export JAVA_HOME={{ settings.java_home }}
