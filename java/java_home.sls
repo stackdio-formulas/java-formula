@@ -3,7 +3,7 @@
       'bashrc': '/etc/bash.bashrc',
       'marker_start': '# System-wide .bashrc file for interactive bash(1) shells.',
       'marker_end': '# To enable the settings / commands in this file for login shells as well,',
-      'java_home': '/usr/lib/jvm/latest',
+      'java_home': '/usr/java/latest',
     },
     'RedHat': {
       'bashrc': '/etc/bashrc',

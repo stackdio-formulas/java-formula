@@ -34,13 +34,22 @@ oracle-java6-installer:
       - cmd: java_installer_selections
       - module: java_refresh_db
 
-# make latest link
-/usr/lib/jvm/latest:
+# Create symlinks so that java can be found in a normal location
+/usr/java/jdk1.6.0:
   file:
     - symlink
-    - target: java-6-oracle
-    - requires:
+    - target: /usr/lib/jvm/java-6-oracle
+    - makedirs: true
+    - require:
       - pkg: oracle-java6-installer
+
+# make latest link
+/usr/java/latest:
+  file:
+    - symlink
+    - target: jdk1.6.0
+    - require:
+      - pkg: /usr/java/jdk1.6.0
 
 
 {% elif grains['os_family'] == 'RedHat' %}

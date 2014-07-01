@@ -34,13 +34,22 @@ oracle-java7-installer:
       - cmd: java_installer_selections
       - module: java_refresh_db
 
-# make the latest link
-/usr/lib/jvm/latest:
+# Create symlink so java can be found in a normal location
+/usr/java/jdk1.7.0:
   file:
     - symlink
-    - target: java-7-oracle
+    - target: /usr/lib/jvm/java-7-oracle
+    - makedirs: true
     - require:
       - pkg: oracle-java7-installer
+
+# make the latest link
+/usr/java/latest:
+  file:
+    - symlink
+    - target: jdk1.7.0
+    - require:
+      - pkg: /usr/java/jdk1.7.0
 
 
 {% elif grains['os_family'] == 'RedHat' %}
