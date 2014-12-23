@@ -1,5 +1,5 @@
 title: OpenJDK and Oracle Java
-description: Formula to install OpenJDK and Oracle Java (versions 6 and 7)
+description: Formula to install OpenJDK and Oracle Java (versions 6, 7, and 8)
 root_path: java
 components:
   - title: Oracle Java 6 JDK
@@ -54,11 +54,11 @@ pillar_defaults:
         bin: 'jre-6u45-linux-x64-rpm.bin'
         rpm: 'jre-1.6.0_45'
       jdk7:
-        uri: 'http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jdk-7u45-linux-x64.rpm'
-        rpm: 'jdk-1.7.0_45'
+        uri: 'http://download.oracle.com/otn-pub/java/jdk/7u55-b13/jdk-7u55-linux-x64.rpm'
+        rpm: 'jdk-1.7.0_55'
       jre7:
-        uri: 'http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jre-7u45-linux-x64.rpm'
-        rpm: 'jre-1.7.0_45'
+        uri: 'http://download.oracle.com/otn-pub/java/jdk/7u55-b13/jre-7u55-linux-x64.rpm'
+        rpm: 'jre-1.7.0_55'
       jce7:
         uri: 'http://download.oracle.com/otn-pub/java/jce/7/UnlimitedJCEPolicyJDK7.zip'
       jdk8:
