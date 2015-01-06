@@ -27,6 +27,8 @@ wget:
   pkg:
     - installed
 
+# Set the timeout to 2 minutes.  It looks like it usually takes around 80 seconds to download.
+# Then let it retry 3 times.
 download_java:
   cmd:
     - run
@@ -62,7 +64,7 @@ download_jce:
   cmd:
     - run
     - cwd: {{ staging }}
-    - name: 'wget --no-check-certificate --header="Cookie: {{ cookies }}" -c "{{ jce_uri }}" -O jce.zip'
+    - name: 'wget --no-check-certificate --timeout=120 --tries=3 --header="Cookie: {{ cookies }}" -c "{{ jce_uri }}" -O jce.zip'
     - require:
       - pkg: wget
       - file: init_staging
