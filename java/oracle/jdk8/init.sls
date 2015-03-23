@@ -113,6 +113,10 @@ download_jce:
       - pkg: wget
       - file: init_staging
 
+unzip:
+  pkg:
+    - installed
+
 unzip_jce:
   cmd:
     - run
@@ -120,6 +124,7 @@ unzip_jce:
     - name: 'unzip -d jce jce.zip'
     - require:
       - cmd: download_jce
+      - pkg: unzip
 
 install_jce:
   cmd:
