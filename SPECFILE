@@ -54,11 +54,11 @@ pillar_defaults:
         bin: 'jre-6u45-linux-x64-rpm.bin'
         rpm: 'jre-1.6.0_45'
       jdk7:
-        uri: 'http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jdk-7u45-linux-x64.rpm'
-        rpm: 'jdk-1.7.0_45'
+        uri: 'http://download.oracle.com/otn-pub/java/jdk/7u80-b15/jdk-7u80-linux-x64.rpm'
+        rpm: 'jdk-1.7.0_80'
       jre7:
-        uri: 'http://download.oracle.com/otn-pub/java/jdk/7u45-b18/jre-7u45-linux-x64.rpm'
-        rpm: 'jre-1.7.0_45'
+        uri: 'http://download.oracle.com/otn-pub/java/jdk/7u80-b15/jre-7u80-linux-x64.rpm'
+        rpm: 'jre-1.7.0_80'
       jce7:
         uri: 'http://download.oracle.com/otn-pub/java/jce/7/UnlimitedJCEPolicyJDK7.zip'
       jdk8:
