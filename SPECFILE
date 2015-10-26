@@ -62,10 +62,10 @@ pillar_defaults:
       jce7:
         uri: 'http://download.oracle.com/otn-pub/java/jce/7/UnlimitedJCEPolicyJDK7.zip'
       jdk8:
-        uri: 'http://download.oracle.com/otn-pub/java/jdk/8u51-b16/jdk-8u51-linux-x64.rpm'
-        rpm: 'jdk1.8.0_51-1.8.0_51-fcs'
+        uri: 'http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.rpm'
+        rpm: 'jdk1.8.0_66-1.8.0_66-fcs'
       jre8:
-        uri: 'http://download.oracle.com/otn-pub/java/jdk/8u51-b16/jre-8u51-linux-x64.rpm'
-        rpm: 'jre1.8.0_51-1.8.0_51-fcs'
+        uri: 'http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jre-8u66-linux-x64.rpm'
+        rpm: 'jre1.8.0_66-1.8.0_66-fcs'
       jce8:
         uri: 'http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip'
