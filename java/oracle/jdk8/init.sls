@@ -109,6 +109,7 @@ download_jce:
     - run
     - cwd: {{ staging }}
     - name: 'wget --no-check-certificate --header="Cookie: {{ cookies }}" -c "{{ jce_uri }}" -O jce.zip'
+    - unless: 'ls {{ staging }}/jce.zip'
     - require:
       - pkg: wget
       - file: init_staging
