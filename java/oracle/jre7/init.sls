@@ -65,6 +65,7 @@ download_jce:
     - run
     - cwd: {{ staging }}
     - name: 'wget --no-check-certificate --header="Cookie: {{ cookies }}" -c "{{ jce_uri }}" -O jce.zip'
+    - unless: test -f /usr/java/latest/jre/lib/security/local_policy.jar
     - require:
       - pkg: wget
       - file: init_staging
@@ -78,6 +79,7 @@ unzip_jce:
     - run
     - cwd: {{ staging }}
     - name: 'unzip -d jce jce.zip'
+    - unless: test -f /usr/java/latest/jre/lib/security/local_policy.jar
     - require:
       - cmd: download_jce
       - pkg: unzip
@@ -87,6 +89,7 @@ install_jce:
     - run
     - cwd: {{ staging }}
     - name: 'mv jce/*/*.jar /usr/java/latest/lib/security'
+    - unless: test -f /usr/java/latest/jre/lib/security/local_policy.jar
     - require:
       - cmd: unzip_jce
 {% endif %}
