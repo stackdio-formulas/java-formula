@@ -97,7 +97,14 @@ set_alternatives:
     - run
     - cwd: {{ staging }}
     - name: 'alternatives --install /usr/bin/java java /usr/java/latest/bin/java 1000000'
-    - onlyif: 'rpm -qa | grep {{ java_rpm }}'
+    - require:
+      - cmd: install_java
+
+set_alternatives_keytool:
+  cmd:
+    - run
+    - cwd: {{ staging }}
+    - name: 'alternatives --install /usr/bin/keytool keytool /usr/java/latest/bin/keytool 1000000'
     - require:
       - cmd: install_java
 
