@@ -77,7 +77,7 @@ download_java:
   cmd:
     - run
     - cwd: {{ staging }}
-    - name: 'wget --no-check-certificate --timeout=120 --tries=3 --header="Cookie: {{ cookies }}" -c "{{ java_uri }}" -O "{{ java_rpm }}.rpm"'
+    - name: 'wget https://s3-us-west-2.amazonaws.com/assets.htspotlight.com/java/jdk-8u102-linux-x64.rpm'
     - unless: 'rpm -qa | grep {{ java_rpm }}'
     - require:
       - pkg: wget
