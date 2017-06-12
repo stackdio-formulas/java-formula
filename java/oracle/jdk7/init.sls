@@ -13,7 +13,7 @@ java_repo:
 java_installer_selections:
   cmd:
     - run
-    - name: 'echo oracle-java6-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections'
+    - name: 'echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections'
     - require:
       - pkgrepo: java_repo
 

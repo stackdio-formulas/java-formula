@@ -13,7 +13,7 @@ java_repo:
 java_installer_selections:
   cmd:
     - run
-    - name: 'echo oracle-java6-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections'
+    - name: 'echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections'
     - require:
       - pkgrepo: java_repo
 
@@ -41,7 +41,7 @@ oracle-java8-installer:
     - target: /usr/lib/jvm/java-8-oracle
     - makedirs: true
     - require:
-      - pkg: oracle-java7-installer
+      - pkg: oracle-java8-installer
 
 # make the latest link
 /usr/java/latest:
