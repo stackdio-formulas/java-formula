@@ -2,12 +2,6 @@ title: OpenJDK and Oracle Java
 description: Formula to install OpenJDK and Oracle Java (versions 6 and 7)
 root_path: java
 components:
-  - title: Oracle Java 6 JDK
-    description: Oracle Java 6 JDK
-    sls_path: java.oracle.jdk6
-  - title: Oracle Java 6 JRE
-    description: Oracle Java 6 JRE
-    sls_path: java.oracle.jre6
   - title: Oracle Java 7 JDK
     description: Oracle Java 7 JDK
     sls_path: java.oracle.jdk7
@@ -20,12 +14,6 @@ components:
   - title: Oracle Java 8 JRE
     description: Oracle Java 8 JRE
     sls_path: java.oracle.jre8
-  - title: OpenJDK Java 6 JDK
-    description: OpenJDK Java 6 JDK
-    sls_path: java.openjdk.jdk6
-  - title: OpenJDK Java 6 JRE
-    description: OpenJDK Java 6 JRE
-    sls_path: java.openjdk.jre6
   - title: OpenJDK Java 7 JDK
     description: OpenJDK Java 7 JDK
     sls_path: java.openjdk.jdk7
@@ -45,14 +33,6 @@ pillar_defaults:
     oracle:
       staging: /tmp/.java_staging
       cookies: 'gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie'
-      jdk6:
-        uri: 'http://download.oracle.com/otn-pub/java/jdk/6u45-b06/'
-        bin: 'jdk-6u45-linux-x64-rpm.bin'
-        rpm: 'jdk-1.6.0_45'
-      jre6:
-        uri: 'http://download.oracle.com/otn-pub/java/jdk/6u45-b06/'
-        bin: 'jre-6u45-linux-x64-rpm.bin'
-        rpm: 'jre-1.6.0_45'
       jdk7:
         uri: 'http://download.oracle.com/otn-pub/java/jdk/7u80-b15/jdk-7u80-linux-x64.rpm'
         rpm: 'jdk-1.7.0_80'
