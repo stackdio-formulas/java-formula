@@ -5,30 +5,26 @@ include:
 
 # add the oracle apt repository
 java_repo:
-  pkgrepo:
-    - managed
+  pkgrepo.managed:
     - ppa: webupd8team/java
 
 # accept the license agreement for a headless install
 java_installer_selections:
-  cmd:
-    - run
+  cmd.run:
     - name: 'echo oracle-java6-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections'
     - require:
       - pkgrepo: java_repo
 
 # ie, apt-get update
 java_refresh_db:
-  module:
-    - run
+  module.run:
     - name: pkg.refresh_db
     - require:
       - pkgrepo: java_repo
 
 # install java
 oracle-java8-installer:
-  pkg:
-    - installed
+  pkg.installed:
     - name: oracle-java8-installer
     - require:
       - cmd: java_installer_selections
@@ -36,8 +32,7 @@ oracle-java8-installer:
 
 # Create symlink so java can be found in a normal location
 /usr/java/jdk1.8.0:
-  file:
-    - symlink
+  file.symlink:
     - target: /usr/lib/jvm/java-8-oracle
     - makedirs: true
     - require:
@@ -45,8 +40,7 @@ oracle-java8-installer:
 
 # make the latest link
 /usr/java/latest:
-  file:
-    - symlink
+  file.symlink:
     - target: jdk1.8.0
     - require:
       - file: /usr/java/jdk1.8.0
@@ -61,21 +55,18 @@ oracle-java8-installer:
 {% set java_rpm = pillar.java.oracle.jdk8.rpm %}
 
 init_staging:
-  file:
-    - directory
+  file.directory:
     - name: {{ staging }}
     - makedirs: true
     - clean: true
 
 wget:
-  pkg:
-    - installed
+  pkg.installed: []
 
 # Set the timeout to 2 minutes.  It looks like it usually takes around 80 seconds to download.
 # Then let it retry 3 times.
 download_java:
-  cmd:
-    - run
+  cmd.run:
     - cwd: {{ staging }}
     - name: 'wget --no-check-certificate --timeout=120 --tries=3 --header="Cookie: {{ cookies }}" -c "{{ java_uri }}" -O "{{ java_rpm }}.rpm"'
     - unless: 'rpm -qa | grep {{ java_rpm }}'
@@ -84,8 +75,7 @@ download_java:
       - file: init_staging
 
 install_java:
-  cmd:
-    - run
+  cmd.run:
     - cwd: {{ staging }}
     - name: 'rpm -Uvh {{ java_rpm }}.rpm'
     - unless: 'rpm -qa | grep {{ java_rpm }}'
@@ -93,16 +83,14 @@ install_java:
       - cmd: download_java
 
 set_alternatives:
-  cmd:
-    - run
+  cmd.run:
     - cwd: {{ staging }}
     - name: 'alternatives --install /usr/bin/java java /usr/java/latest/bin/java 1000000'
     - require:
       - cmd: install_java
 
 set_alternatives_keytool:
-  cmd:
-    - run
+  cmd.run:
     - cwd: {{ staging }}
     - name: 'alternatives --install /usr/bin/keytool keytool /usr/java/latest/bin/keytool 1000000'
     - require:
@@ -112,8 +100,7 @@ set_alternatives_keytool:
 {% set jce_uri = pillar.java.oracle.jce8.uri %}
 
 download_jce:
-  cmd:
-    - run
+  cmd.run:
     - cwd: {{ staging }}
     - name: 'wget --no-check-certificate --header="Cookie: {{ cookies }}" -c "{{ jce_uri }}" -O jce.zip'
     - require:
@@ -121,12 +108,10 @@ download_jce:
       - file: init_staging
 
 unzip:
-  pkg:
-    - installed
+  pkg.installed: []
 
 unzip_jce:
-  cmd:
-    - run
+  cmd.run:
     - cwd: {{ staging }}
     - name: 'unzip -d jce jce.zip'
     - require:
@@ -134,8 +119,7 @@ unzip_jce:
       - pkg: unzip
 
 install_jce:
-  cmd:
-    - run
+  cmd.run:
     - cwd: {{ staging }}
     - name: 'mv jce/*/*.jar /usr/java/latest/jre/lib/security'
     - require:
@@ -143,13 +127,37 @@ install_jce:
 {% endif %}
 
 clear_staging:
-  file:
-    - absent
+  file.absent:
     - name: {{ staging }}
     - require:
       - cmd: install_java
-{% if pillar.java.enable_jce %}
+      {% if pillar.java.enable_jce %}
       - cmd: install_jce
+      {% endif %}
+
+/usr/java/latest/jre/lib/security/jssecacerts:
+  file.copy:
+    - source: /usr/java/latest/jre/lib/security/cacerts
+    - preserve: true
+    - require:
+      - cmd: install_java
+
+{% if pillar.ssl.ca_certificate %}
+/usr/java/latest/jre/lib/security/dr-root-ca.crt:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 444
+    - contents_pillar: ssl:ca_certificate
+
+import-dr-ca:
+  cmd.run:
+    - user: root
+    - name: /usr/java/latest/bin/keytool -importcert -keystore /usr/java/latest/jre/lib/security/jssecacerts -storepass changeit -file /usr/java/latest/jre/lib/security/dr-root-ca.crt -alias dr-root-ca -noprompt
+    - unless: /usr/java/latest/bin/keytool -list -keystore /usr/java/latest/jre/lib/security/jssecacerts -storepass changeit | grep dr-root-ca | grep trustedCertEntry
+    - require:
+      - file: /usr/java/latest/jre/lib/security/jssecacerts
+      - file: /usr/java/latest/jre/lib/security/dr-root-ca.crt
 {% endif %}
 
 {% endif %}
