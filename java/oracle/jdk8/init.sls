@@ -142,7 +142,7 @@ clear_staging:
     - require:
       - cmd: install_java
 
-{% if pillar.ssl.ca_certificate %}
+{% if salt['pillar.get']('ssl:ca_certificate', None) %}
 /usr/java/latest/jre/lib/security/dr-root-ca.crt:
   file.managed:
     - user: root
